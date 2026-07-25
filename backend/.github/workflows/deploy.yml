@@ -1,0 +1,95 @@
+name: Deploy
+
+on:
+    push:
+        branches: [main]
+    workflow_dispatch:
+        inputs:
+            environment:
+                description: 'Deployment environment'
+                required: true
+                default: 'production'
+                type: choice
+                options:
+                    - staging
+                    - production
+
+env:
+    APP_NAME: YFlow
+    APP_ENV: production
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        environment: ${{ github.event.inputs.environment || 'production' }}
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql
+                  tools: composer:v2
+
+            - name: Install dependencies
+              working-directory: ./backend
+              run: composer install --no-progress --prefer-dist --optimize-autoloader --no-dev
+
+            - name: Setup frontend
+              working-directory: ./frontend
+              run: |
+                  npm ci
+                  npm run build
+
+            - name: Cache artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: deployment-artifacts
+                  path: |
+                      backend/vendor
+                      backend/storage
+                      frontend/dist
+                  retention-days: 7
+
+            - name: Deploy to server
+              if: always()
+              run: |
+                  echo "Deployment ready for ${{ github.event.inputs.environment || 'production' }}"
+                  echo "Download artifacts and deploy via SSH/FTP"
+              # Add your deployment script here:
+              # - uses: appleboy/ssh-action@master
+              #   with:
+              #       host: ${{ secrets.DEPLOY_HOST }}
+              #       username: ${{ secrets.DEPLOY_USER }}
+              #       key: ${{ secrets.DEPLOY_KEY }}
+              #       script: |
+              #           cd /var/www/yflow
+              #           git pull origin main
+              #           composer install --no-dev --optimize-autoloader
+              #           php artisan migrate --force
+              #           php artisan config:cache
+              #           pm2 restart yflow
+
+            - name: Notify deployment
+              if: always()
+              run: echo "Deployment completed at $(date)"
+              # Add notification webhook here:
+              # - uses: slackapi/slack-github-action@v1
+              #   with:
+              #       payload: |
+              #           {"text": "YFlow deployed to ${{ github.event.inputs.environment || 'production' }}"}
+              #       webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+
+    rollback:
+        needs: deploy
+        if: failure()
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Rollback deployment
+              run: |
+                  echo "Rolling back deployment..."
+                  # Add rollback script here

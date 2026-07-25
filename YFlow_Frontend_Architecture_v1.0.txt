@@ -1,0 +1,73 @@
+YFLOW FRONTEND ARCHITECTURE v1.0
+
+STACK
+
+Framework : Next.js 15 React : 19 TypeScript Tailwind CSS shadcn/ui
+TanStack Query Zustand React Hook Form Zod
+
+APP STRUCTURE
+
+app/ components/ features/ hooks/ lib/ providers/ services/ stores/
+types/ utils/
+
+FEATURE MODULES
+
+Dashboard Workspace People Projects Workflow Tasks Calendar Knowledge AI
+Settings
+
+FEATURE STRUCTURE
+
+feature/ ├── api/ ├── components/ ├── hooks/ ├── types/ ├── utils/ └──
+pages/
+
+ROUTING
+
+/ dashboard /projects /projects/[id] /calendar /people /knowledge /ai
+/settings
+
+STATE MANAGEMENT
+
+Server State: TanStack Query
+
+Client State: Zustand
+
+Form State: React Hook Form
+
+VALIDATION
+
+Zod
+
+DESIGN SYSTEM
+
+Design Tokens Typography Spacing Color System Icon System Component
+Library
+
+COMMON COMPONENTS
+
+Button Input Select Dialog Drawer Sheet Tabs Card Table Data Grid Avatar
+Badge Toast
+
+DATA FLOW
+
+Page ↓ Hook ↓ Service ↓ API ↓ Backend
+
+PERFORMANCE
+
+Server Components Streaming Lazy Loading Code Splitting Image
+Optimization Caching
+
+AUTH FLOW
+
+Login ↓ Access Token ↓ Protected Route ↓ API Request ↓ Refresh Token
+
+ERROR HANDLING
+
+Error Boundary Toast Loading State Empty State Retry Strategy
+
+TESTING
+
+Vitest Playwright React Testing Library
+
+DEPLOYMENT
+
+Vercel Docker Cloudflare CDN Analytics Monitoring

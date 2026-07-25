@@ -1,0 +1,118 @@
+YFlow PRD Version 1.0 (MVP)
+
+Target: - Solo developer - Development < 2 minggu - Manual-first,
+AI-assisted
+
+Scope
+
+1.  Authentication
+
+-   Email & Password
+
+2.  Dashboard
+
+-   Today Overview
+-   My Schedule
+-   Notifications
+-   Active Projects
+-   AI Suggestions
+-   Recent Activity
+-   Quick Actions
+
+3.  Projects
+
+-   Create/Edit/Delete
+-   Overview
+-   Members
+-   Notes
+-   Files
+-   Timeline
+-   Calendar
+
+4.  Workflow
+
+-   Blank Workflow
+-   AI Generate Workflow
+-   Workflow Builder
+-   Stage
+-   Task
+-   Checklist
+-   Dependency
+-   AI Review Workflow
+
+5.  Tasks
+
+-   CRUD
+-   Assign Member
+-   Priority
+-   Due Date
+-   Status
+-   Checklist
+-   Comment
+-   Attachment
+
+6.  Calendar
+
+-   Month
+-   Week
+-   Day
+-   Agenda
+-   Mini dashboard per tanggal
+-   Click date -> detail task
+
+7.  Focus View
+
+-   Today’s Tasks
+-   Meetings
+-   Deadlines
+-   Reminder
+-   Progress
+
+8.  People
+
+-   Members
+-   Workload
+-   Personal Calendar
+
+9.  Knowledge
+
+-   Notes
+-   SOP
+-   Templates
+
+10. AI
+
+-   Chat
+-   Generate Workflow
+-   Generate Task
+-   Generate Checklist
+-   Review Workflow
+
+11. Notifications
+
+-   In-app notifications
+-   Mention
+-   Reminder
+-   Deadline
+-   Approval
+
+12. Settings
+
+-   Workspace
+-   Roles
+-   Preferences
+
+Database (MVP)
+
+users workspaces projects project_members workflows workflow_stages
+tasks task_checklists task_comments calendar_events notes files
+notifications activity_logs ai_sessions ai_histories labels settings
+
+Core User Flow
+
+Login → Create Project → Blank / Template / AI → Workflow → AI Review
+(optional) → Generate Tasks → Assign Members → Calendar → Focus View →
+Complete → Dashboard Update
+
+Success Criteria - Digunakan agency kecil - Semua aktivitas inti
+berjalan dalam satu aplikasi - AI bersifat opsional

@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Requests\Person;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StorePersonRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'workspace_id' => ['required', 'uuid', 'exists:workspaces,id'],
+            'department_id' => ['nullable', 'uuid', 'exists:departments,id'],
+            'position_id' => ['nullable', 'uuid', 'exists:positions,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255', 'unique:people,email'],
+            'role' => ['nullable', 'in:admin,manager,member,guest'],
+            'status' => ['nullable', 'in:active,inactive,on_leave'],
+            'avatar' => ['nullable', 'url', 'max:255'],
+            'bio' => ['nullable', 'string'],
+            'skill_ids' => ['nullable', 'array'],
+            'skill_ids.*' => ['uuid', 'exists:skills,id'],
+        ];
+    }
+}

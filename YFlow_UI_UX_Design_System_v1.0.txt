@@ -1,0 +1,70 @@
+YFLOW UI/UX DESIGN SYSTEM v1.0
+
+1.  DESIGN PRINCIPLES
+
+-   Clean
+-   Fast
+-   Consistent
+-   Accessibility First
+-   Mobile Responsive
+-   Keyboard Friendly
+-   AI Assisted, Human Controlled
+
+2.  DESIGN TOKENS Color Palette
+
+-   Primary
+-   Secondary
+-   Success
+-   Warning
+-   Danger
+-   Neutral 50-950
+
+Typography - Font: Inter - H1 36/700 - H2 30/700 - H3 24/600 - H4
+20/600 - Body 16/400 - Small 14/400
+
+Spacing Scale 4,8,12,16,20,24,32,40,48,64
+
+Border Radius 4,8,12,16,20
+
+Elevation Shadow XS,S,M,L,XL
+
+3.  LAYOUT Sidebar (collapsible) Topbar Breadcrumb Command Palette Main
+    Content Right Context Panel
+
+Breakpoints Mobile <768 Tablet 768-1023 Desktop 1024-1439 Wide >=1440
+
+4.  COMPONENT LIBRARY Foundation: Button, IconButton, Input, Textarea,
+    Select, Combobox, Checkbox, Radio, Switch, Badge, Avatar, Tooltip,
+    Progress, Spinner, Skeleton.
+
+Navigation: Sidebar, Navbar, Tabs, Breadcrumb, Pagination, Menu.
+
+Data Display: Card, Table, DataGrid, Timeline, Kanban, Calendar,
+Activity Feed.
+
+Feedback: Toast, Dialog, Alert, Sheet, Drawer, Empty State, Error State.
+
+AI: Prompt Box, AI Response Card, Suggestion Panel, Diff Viewer.
+
+5.  PAGE PATTERNS Dashboard List Detail Create/Edit Settings Wizard
+    Analytics
+
+6.  UX RULES
+
+-   Max 3 clicks to common actions.
+-   Save feedback under 300ms.
+-   Optimistic updates where safe.
+-   Keyboard shortcuts for primary actions.
+-   Consistent empty/loading/error states.
+
+7.  ACCESSIBILITY WCAG AA Visible focus ARIA labels Keyboard navigation
+    Contrast >=4.5:1
+
+8.  ICONOGRAPHY Lucide Icons 24px default Consistent semantic usage.
+
+9.  MOTION 150-250ms transitions No excessive animation Reduced motion
+    support.
+
+10. DESIGN QA CHECKLIST Responsive Accessible Consistent spacing No
+    overflow Dark mode ready Localization ready Performance budget
+    maintained.

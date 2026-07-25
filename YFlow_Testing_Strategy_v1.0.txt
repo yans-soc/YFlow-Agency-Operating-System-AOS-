@@ -1,0 +1,3 @@
+YFLOW TESTING STRATEGY Unit, Integration, Feature, API, E2E. Coverage:
+business logic >=90%, overall >=80%. Release gates: security,
+performance, regression, accessibility.

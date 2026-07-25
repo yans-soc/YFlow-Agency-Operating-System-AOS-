@@ -1,0 +1,100 @@
+YFLOW BUSINESS RULES v1.0
+
+1.  WORKSPACE
+
+-   Every workspace must have at least one Owner (Workspace Admin).
+-   Workspace name must be unique for the owner.
+-   A workspace cannot be deleted while active projects exist.
+-   Suspended workspaces are read-only.
+
+2.  ORGANIZATION
+
+-   Departments belong to one workspace.
+-   Teams belong to one department.
+-   Positions, Skills and Resource Types are workspace-scoped and
+    customizable.
+
+3.  PEOPLE
+
+-   Email must be unique within a workspace.
+-   One person may belong to one department and one primary team.
+-   A person may join many projects.
+-   A Client cannot be assigned internal management permissions.
+
+4.  PERMISSIONS System Roles:
+
+-   Super Admin
+-   Workspace Admin
+-   Operations Manager
+-   Project Manager
+-   Contributor
+-   Client
+
+Project Roles: - Owner - Manager - Lead - Contributor - Reviewer -
+Approver - Observer - Client
+
+System Role controls platform permissions. Project Role controls project
+permissions only.
+
+5.  PROJECT
+
+-   Every project belongs to one workspace.
+-   Every project must have at least one Project Owner.
+-   Project code must be unique.
+-   Archived projects become read-only.
+-   Closed projects cannot receive new tasks.
+
+6.  WORKFLOW
+
+-   A project may contain multiple workflows.
+-   A workflow contains ordered stages.
+-   Workflow cannot be completed while unfinished stages exist.
+
+7.  STAGE
+
+-   Stage order must be unique inside one workflow.
+-   Closed stages cannot receive new tasks.
+
+8.  TASK
+
+-   Every task belongs to one stage.
+-   Task may have multiple assignees.
+-   Due date cannot be earlier than creation date.
+-   Done requires all required checklist items completed.
+-   Archived tasks are immutable.
+
+9.  CHECKLIST
+
+-   Checklist belongs to one task.
+-   Completion updates task progress.
+
+10. FILES & NOTES
+
+-   Files belong to Project, Task or Note.
+-   Notes belong to Project.
+
+11. CALENDAR
+
+-   Events may belong to Workspace, Project or Task.
+-   Cancelling a project does not delete historical events.
+
+12. ACTIVITY
+
+-   Important actions generate immutable activity logs.
+
+13. NOTIFICATION
+
+-   Triggered by assignments, mentions, reviews, approvals, due dates
+    and completions.
+
+14. AI
+
+-   AI never modifies production data automatically.
+-   AI suggestions require explicit user confirmation.
+-   AI conversations are stored as AI Sessions.
+
+15. GLOBAL
+
+-   Soft Delete enabled.
+-   UUID primary keys.
+-   Audit timestamps on all business entities.

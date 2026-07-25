@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ ! -z "$WWWUSER" ]; then
+    usermod -u $WWWUSER sail
+fi
+
+if [ ${#SUPERVISOR_PHP_COMMAND} -ge 1 ]; then
+    sed -i "s@/usr/bin/php.*@${SUPERVISOR_PHP_COMMAND}@g" /etc/supervisor/conf.d/supervisord.conf
+fi
+
+if [ ${#SUPERVISOR_PHP_USER} -ge 1 ]; then
+    sed -i "s@user=www-data@user=${SUPERVISOR_PHP_USER}@g" /etc/supervisor/conf.d/supervisord.conf
+fi
+
+chown -R :sail /var/www/html/storage /var/www/html/bootstrap/cache
+
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

@@ -1,0 +1,8 @@
+YFLOW DATABASE MIGRATION PLAN v1.0 Purpose: migration order, FK
+dependencies, rollback, seeds. Order: 001 workspaces 002 departments 003
+teams 004 positions 005 skills 006 people 007 person_skills 008 projects
+009 project_members 010 workflows 011 workflow_stages 012 tasks 013
+task_assignees 014 task_checklists 015 notes 016 files 017
+calendar_events 018 notifications 019 activities 020 ai_sessions
+Standards: UUID, FK, indexes, soft delete, audit columns. Rollback:
+reverse order, validate FK, never auto-delete production data.

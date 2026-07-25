@@ -1,0 +1,34 @@
+import { Link } from "react-router-dom";
+import { LoginForm } from "./LoginForm";
+
+export function LoginPage() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-neutral-50 px-16">
+      <div className="w-full max-w-md">
+        <div className="mb-32 text-center">
+          <h1 className="text-h3 font-bold text-neutral-900">YFlow</h1>
+          <p className="mt-8 text-body text-neutral-600">
+            Agency Operating System
+          </p>
+        </div>
+
+        <div className="card">
+          <h2 className="mb-24 text-center text-h4 font-semibold">Sign In</h2>
+          <LoginForm />
+
+          <div className="mt-24 text-center">
+            <p className="text-sm text-neutral-600">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="font-medium text-primary-600 hover:text-primary-700"
+              >
+                Sign up
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

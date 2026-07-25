@@ -1,0 +1,111 @@
+YFLOW ERD MASTER v1.0
+
+DATABASE STANDARD
+
+Database : PostgreSQL/MySQL Primary Key : UUID Soft Delete : enabled
+Audit Columns : - created_at - updated_at - deleted_at
+
+==================================================================
+TABLE: workspaces Purpose: Stores workspace information.
+
+Columns: id UUID PK name VARCHAR(150) UNIQUE slug VARCHAR(150) UNIQUE
+logo TEXT NULL timezone VARCHAR(50) status
+ENUM(draft,active,suspended,archived) created_at TIMESTAMP updated_at
+TIMESTAMP deleted_at TIMESTAMP
+
+Relationship: 1:N departments 1:N people 1:N projects
+
+==================================================================
+TABLE: departments id UUID PK workspace_id FK -> workspaces.id name
+VARCHAR(100) description TEXT Indexes: (workspace_id,name) UNIQUE
+
+==================================================================
+TABLE: teams id UUID PK department_id FK lead_id FK -> people.id NULL
+name VARCHAR(100)
+
+==================================================================
+TABLE: positions id UUID PK workspace_id FK name VARCHAR(100)
+
+==================================================================
+TABLE: skills id UUID PK workspace_id FK name VARCHAR(100)
+
+==================================================================
+TABLE: people id UUID PK workspace_id FK department_id FK team_id FK
+position_id FK system_role
+ENUM(super_admin,workspace_admin,operations_manager,project_manager,contributor,client)
+name VARCHAR(150) email VARCHAR(150) UNIQUE phone VARCHAR(30) avatar
+TEXT status ENUM(active,inactive)
+
+==================================================================
+TABLE: person_skills person_id FK skill_id FK PRIMARY
+KEY(person_id,skill_id)
+
+==================================================================
+TABLE: projects id UUID PK workspace_id FK owner_id FK -> people.id code
+VARCHAR(30) UNIQUE name VARCHAR(200) description TEXT status
+ENUM(draft,planning,active,completed,archived) start_date DATE end_date
+DATE
+
+==================================================================
+TABLE: project_members project_id FK person_id FK project_role
+ENUM(owner,manager,lead,contributor,reviewer,approver,observer,client)
+PRIMARY KEY(project_id,person_id)
+
+==================================================================
+TABLE: workflows id UUID PK project_id FK name VARCHAR(150) status
+ENUM(draft,active,completed)
+
+==================================================================
+TABLE: workflow_stages id UUID PK workflow_id FK name VARCHAR(100)
+sort_order INTEGER UNIQUE(workflow_id,sort_order)
+
+==================================================================
+TABLE: tasks id UUID PK stage_id FK created_by FK -> people.id title
+VARCHAR(255) description TEXT priority ENUM(low,medium,high,urgent)
+status ENUM(draft,todo,in_progress,review,approved,done,archived)
+start_date DATE due_date DATE
+
+Indexes: (stage_id,status) (due_date)
+
+==================================================================
+TABLE: task_assignees task_id FK person_id FK PRIMARY
+KEY(task_id,person_id)
+
+==================================================================
+TABLE: task_checklists id UUID PK task_id FK title VARCHAR(255)
+is_completed BOOLEAN
+
+==================================================================
+TABLE: notes id UUID PK project_id FK author_id FK title VARCHAR(255)
+content TEXT
+
+==================================================================
+TABLE: files id UUID PK project_id FK NULL task_id FK NULL note_id FK
+NULL filename VARCHAR(255) path TEXT mime_type VARCHAR(100) size BIGINT
+
+Constraint: One parent reference minimum.
+
+==================================================================
+TABLE: calendar_events id UUID PK workspace_id FK project_id FK NULL
+title VARCHAR(255) start_at TIMESTAMP end_at TIMESTAMP
+
+==================================================================
+TABLE: notifications id UUID PK recipient_id FK type VARCHAR(50) title
+VARCHAR(255) message TEXT is_read BOOLEAN
+
+==================================================================
+TABLE: activities id UUID PK actor_id FK entity_type VARCHAR(50)
+entity_id UUID action VARCHAR(100) metadata JSON created_at TIMESTAMP
+
+==================================================================
+TABLE: ai_sessions id UUID PK project_id FK NULL person_id FK title
+VARCHAR(255) model VARCHAR(100)
+
+==================================================================
+CARDINALITY SUMMARY
+
+Workspace 1:N Departments Workspace 1:N People Workspace 1:N Projects
+Department 1:N Teams Department 1:N People Project 1:N Workflows
+Workflow 1:N Stages Stage 1:N Tasks Task N:N People Task 1:N Checklist
+Project 1:N Notes Project 1:N Files Project 1:N Calendar Events Person
+N:N Skills Project N:N People

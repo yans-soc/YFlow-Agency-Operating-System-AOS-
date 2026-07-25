@@ -1,0 +1,95 @@
+name: CI
+
+on:
+    push:
+        branches: [main, develop]
+    pull_request:
+        branches: [main, develop]
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql
+            - name: Install dependencies
+              run: composer install --no-progress --prefer-dist --optimize-autoloader
+            - name: Run Pint (Linter)
+              run: vendor/bin/pint --test
+
+    test:
+        runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres:17
+                env:
+                    POSTGRES_DB: yflow_test
+                    POSTGRES_USER: postgres
+                    POSTGRES_PASSWORD: secret
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 3
+            redis:
+                image: redis:alpine
+                ports:
+                    - 6379:6379
+                options: >-
+                    --health-cmd "redis-cli ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 3
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql
+            - name: Install dependencies
+              run: composer install --no-progress --prefer-dist --optimize-autoloader
+            - name: Copy .env
+              run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+            - name: Configure database
+              run: |
+                  echo "DB_CONNECTION=pgsql" >> .env
+                  echo "DB_HOST=127.0.0.1" >> .env
+                  echo "DB_PORT=5432" >> .env
+                  echo "DB_DATABASE=yflow_test" >> .env
+                  echo "DB_USERNAME=postgres" >> .env
+                  echo "DB_PASSWORD=secret" >> .env
+            - name: Generate key
+              run: php artisan key:generate
+            - name: Run migrations
+              run: php artisan migrate --force
+            - name: Run tests
+              run: php artisan test --parallel
+              env:
+                  DB_CONNECTION: pgsql
+                  DB_HOST: 127.0.0.1
+                  DB_PORT: 5432
+                  DB_DATABASE: yflow_test
+                  DB_USERNAME: postgres
+                  DB_PASSWORD: secret
+
+    static-analysis:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql
+            - name: Install dependencies
+              run: composer install --no-progress --prefer-dist --optimize-autoloader
+            - name: Run PHPStan
+              run: vendor/bin/phpstan analyse --no-progress
+              continue-on-error: true

@@ -1,0 +1,4 @@
+YFLOW FRONTEND DEVELOPMENT PLAN Phase1: setup,layout,auth. Phase2:
+dashboard,workspace,people. Phase3: projects,workflow,tasks. Phase4:
+calendar,knowledge,notifications. Phase5: AI,settings,reports. Each
+feature: routes,forms,validation,API,loading,error,tests.
