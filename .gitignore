@@ -56,3 +56,14 @@ coverage/
 ## Documentation drafts
 docs/drafts/
 *.draft.md
+## AI Agent Configs (local only)
+CLAUDE.md
+CODEX.md
+GEMINI.md
+CURSOR.md
+
+## Legacy documentation (superseded by docs/)
+YFlow_*.txt
+
+## AI Prompts (internal use only)
+docs/prompts/
