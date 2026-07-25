@@ -1,5 +1,0 @@
-YFLOW BACKEND DEVELOPMENT PLAN Sprint0: setup,docker,auth,CI. Sprint1:
-workspace,organization,people. Sprint2: projects,members,permissions.
-Sprint3: workflows,stages,tasks. Sprint4: notes,files,checklists.
-Sprint5: calendar,notifications,activities. Sprint6: AI. Each sprint:
-migrations,models,requests,services,repositories,controllers,policies,tests,docs.

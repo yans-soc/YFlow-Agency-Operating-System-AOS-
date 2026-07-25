@@ -1,4 +1,0 @@
-YFLOW DEPLOYMENT GUIDE Environments: local,dev,staging,production.
-Stack: Docker,Nginx,Laravel,Next.js,PostgreSQL,Redis. Pipeline:
-lint->test->build->deploy staging->approval->production. Operations:
-backup,monitoring,rollback,health checks.

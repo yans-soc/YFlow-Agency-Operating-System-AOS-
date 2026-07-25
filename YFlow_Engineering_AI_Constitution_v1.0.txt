@@ -1,4 +1,0 @@
-YFLOW ENGINEERING & AI CONSTITUTION Architecture first. Documentation is
-source of truth. No duplicate logic. Never invent tables/APIs. Read
-Vision->PRD->IA->Domain->Business Rules->ERD->API before coding. Always
-write tests. Keep changes minimal. Production-ready code only.
