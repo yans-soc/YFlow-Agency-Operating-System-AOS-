@@ -1,0 +1,18 @@
+# Platform Architecture & Operational Decisions
+
+This document records the key decisions made during the setup and standardization of the YANS DIGITAL production platform.
+
+---
+
+| Date       | Task ID | Decision                                                                                                                                     | Rationale                                                                                                                                                           | Status      |
+|------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| 2026-07-27 | 1       | **Postpone Coolify Version Upgrade.**                                                                                                        | The initial inspection was inconclusive. A definitive version number could not be obtained. A decision on upgrading will be made after a successful inspection on the live server. | `Logged`    |
+| 2026-07-27 | 2       | **Prioritize Fixing Wildcard Domain Routing (`*.apps.yansdigital.com`).**                                                                    | This is the most critical issue preventing applications from being deployed and accessed. It's a blocker for the entire platform vision.                           | `Logged`    |
+| 2026-07-27 | 2       | **Secure `host.yansdigital.com` with a valid SSL certificate.**                                                                              | The current self-signed certificate is a security risk and causes trust issues. All public-facing endpoints must be secured.                                        | `Logged`    |
+| 2026-07-27 | 3       | **GitHub App is the correct production solution for CI/CD integration.**                                                                     | It provides the most secure and scalable method for granting Coolify access to repositories, compared to personal access tokens or SSH keys.                          | `Logged`    |
+| 2026-07-27 | 5, 4    | **Standardize the repository structure and GitHub organization settings.**                                                                   | A single, enforced standard for repositories and organization policies is crucial for scalability, security, and developer onboarding.                              | `Logged`    |
+| 2026-07-27 | 7       | **Establish and enforce a global naming convention.**                                                                                        | Prevents configuration drift and makes infrastructure easier to manage and debug as the number of applications grows.                                               | `Logged`    |
+| 2026-07-27 | 9       | **Define a standardized Git-to-production deployment workflow.**                                                                             | A single, well-understood workflow reduces deployment errors and simplifies the process for all teams.                                                              | `Logged`    |
+| 2026-07-27 | 10      | **Conduct a comprehensive security audit.**                                                                                                  | The initial scan was incomplete. A full audit is required to identify and mitigate potential vulnerabilities in SSH, Docker, and other components.                    | `Logged`    |
+
+---

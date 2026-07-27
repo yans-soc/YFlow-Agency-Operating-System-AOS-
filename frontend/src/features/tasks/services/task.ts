@@ -1,55 +1,56 @@
-import api from '@/lib/api';
-import type { Task, CreateTaskRequest, UpdateTaskRequest } from '../types/task';
+import api, { unwrap } from "@/lib/api";
+import type { Paginated } from "@/lib/api";
+import type {
+  Task,
+  TaskListParams,
+  CreateTaskRequest,
+  UpdateTaskRequest,
+} from "../types/task";
 
+/**
+ * Task API client.
+ *
+ * `api` already targets the `/api/v1` base URL, so paths here are relative
+ * to that (do NOT re-prefix with `/api/v1`). All identifiers are UUID strings.
+ */
 export const taskService = {
-  list: async (projectId?: number) => {
-    const params = projectId ? `?project_id=${projectId}` : '';
-    const response = await api.get(`/api/v1/tasks${params}`);
-    return response.data;
+  list: async (params: TaskListParams = {}): Promise<Paginated<Task>> => {
+    const response = await api.get("/tasks", { params });
+    return unwrap<Paginated<Task>>(response);
   },
 
-  get: async (id: number) => {
-    const response = await api.get(`/api/v1/tasks/${id}`);
-    return response.data;
+  get: async (id: string): Promise<Task> => {
+    const response = await api.get(`/tasks/${id}`);
+    return unwrap<Task>(response);
   },
 
-  create: async (data: CreateTaskRequest) => {
-    const response = await api.post('/api/v1/tasks', data);
-    return response.data;
+  create: async (data: CreateTaskRequest): Promise<Task> => {
+    const response = await api.post("/tasks", data);
+    return unwrap<Task>(response);
   },
 
-  update: async (id: number, data: UpdateTaskRequest) => {
-    const response = await api.put(`/api/v1/tasks/${id}`, data);
-    return response.data;
+  update: async (id: string, data: UpdateTaskRequest): Promise<Task> => {
+    const response = await api.put(`/tasks/${id}`, data);
+    return unwrap<Task>(response);
   },
 
-  delete: async (id: number) => {
-    const response = await api.delete(`/api/v1/tasks/${id}`);
-    return response.data;
+  remove: async (id: string): Promise<void> => {
+    await api.delete(`/tasks/${id}`);
   },
 
-  addAssignee: async (taskId: number, personId: number) => {
-    const response = await api.post(`/api/v1/tasks/${taskId}/assignees`, { person_id: personId });
-    return response.data;
+  /** Move a task to another workflow stage (Kanban drag/drop). */
+  moveStage: async (id: string, stageId: string): Promise<Task> => {
+    const response = await api.post(`/tasks/${id}/move-stage`, {
+      stage_id: stageId,
+    });
+    return unwrap<Task>(response);
   },
 
-  removeAssignee: async (taskId: number, assigneeId: number) => {
-    const response = await api.delete(`/api/v1/tasks/${taskId}/assignees/${assigneeId}`);
-    return response.data;
-  },
-
-  addChecklist: async (taskId: number, title: string) => {
-    const response = await api.post(`/api/v1/tasks/${taskId}/checklists`, { title });
-    return response.data;
-  },
-
-  toggleChecklist: async (taskId: number, checklistId: number) => {
-    const response = await api.patch(`/api/v1/tasks/${taskId}/checklists/${checklistId}/toggle`);
-    return response.data;
-  },
-
-  deleteChecklist: async (taskId: number, checklistId: number) => {
-    const response = await api.delete(`/api/v1/tasks/${taskId}/checklists/${checklistId}`);
-    return response.data;
+  /** Toggle the task's completed_at timestamp. */
+  toggleComplete: async (id: string): Promise<Task> => {
+    const response = await api.post(`/tasks/${id}/toggle-complete`);
+    return unwrap<Task>(response);
   },
 };
+
+export default taskService;

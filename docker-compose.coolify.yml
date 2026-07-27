@@ -1,0 +1,36 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: docker/backend.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/html
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=yflow
+      - DB_USERNAME=yflow
+      - DB_PASSWORD=password
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/frontend.Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/app
+
+  postgres:
+    image: postgres:13-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=yflow
+      - POSTGRES_USER=yflow
+      - POSTGRES_PASSWORD=password

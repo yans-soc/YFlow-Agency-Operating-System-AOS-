@@ -127,9 +127,6 @@ The project is guided by a complete engineering documentation set:
 | [20-git-workflow.md](docs/20-git-workflow.md) | Git branching and commit conventions |
 | [21-cicd-automation.md](docs/21-cicd-automation.md) | CI/CD pipeline configuration |
 | [22-staging-deployment-guide.md](docs/22-staging-deployment-guide.md) | Staging environment setup |
-| [23-qa-strategy-execution-plan.md](docs/23-qa-strategy-execution-plan.md) | QA execution checklist |
-| [24-api-freeze-sop.md](docs/24-api-freeze-sop.md) | API freeze procedures |
-| [25-qa-signoff-api-freeze.md](docs/25-qa-signoff-api-freeze.md) | QA sign-off certificate |
 
 Additional docs available in `docs/` folder.
 
@@ -207,20 +204,6 @@ The project follows a structured engineering lifecycle:
 - ⏳ Sprint 6: Release Candidate
 - ⏳ Sprint 7: Production Deployment
 -  Sprint 8: Hypercare → v1.0.0 Launch
-
----
-
-## Quick Start (Development)
-
-### Prerequisites
-
-- Docker & Docker Compose
-- Node.js 18+
-- PHP 8.2+ (optional, for local development without Docker)
-
-### Backend Setup
-
-```bash
 cd backend
 
 # Copy environment file
